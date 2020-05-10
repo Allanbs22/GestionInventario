@@ -16,6 +16,7 @@ namespace GestionInventario.Models
         public string Color { get; set; }
         [Required(ErrorMessage = "El campo de precio unitario es requerido")]
         [DisplayName("Precio unitario")]
+        [DataType(DataType.Currency)]
         public decimal PrecioUnitario { get; set; }
         [Required(ErrorMessage = "El campo de cantidad disponible es requerido")]
         [DisplayName("Cantidad disponible")]
