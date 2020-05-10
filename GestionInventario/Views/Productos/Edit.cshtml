@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+
+
+<h1>Editar</h1>
 
 <h4>Producto</h4>
 <hr />
@@ -40,11 +42,6 @@
                 <span asp-validation-for="CantidadDisponible" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
-                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
@@ -57,4 +54,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/CustomValidation.js"></script>
 }

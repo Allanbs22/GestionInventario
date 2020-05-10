@@ -101,7 +101,7 @@ namespace GestionInventario.Controllers
             {
                 try
                 {
-                    _context.Update(producto);
+                    _context.Update(producto).Property(x => x.FechaCreacion).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

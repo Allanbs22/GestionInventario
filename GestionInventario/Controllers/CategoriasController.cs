@@ -85,7 +85,7 @@ namespace GestionInventario.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdCategoria,Nombre,FechaCreacion")] Categoria categoria)
+        public async Task<IActionResult> Edit(long id, [Bind("IdCategoria,Nombre")] Categoria categoria)
         {
             if (id != categoria.IdCategoria)
             {
@@ -96,7 +96,7 @@ namespace GestionInventario.Controllers
             {
                 try
                 {
-                    _context.Update(categoria);
+                    _context.Update(categoria).Property(x => x.FechaCreacion).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -138,10 +138,17 @@ namespace GestionInventario.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var categoria = await _context.Categoria.FindAsync(id);
-            _context.Categoria.Remove(categoria);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
+            var producto = _context.Producto.SingleOrDefault(x => x.IdCategoria == id);
+            if (producto == null)
+            {
+                var categoria = await _context.Categoria.FindAsync(id);
+                _context.Categoria.Remove(categoria);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Delete));
+
         }
 
         private bool CategoriaExists(long id)
